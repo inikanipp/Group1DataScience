@@ -1,0 +1,94 @@
+/* div[data-testid="stAppViewContainer"] {
+    background-color: #f6f6f4;  
+} */
+
+
+
+/* div[data-testid="stMain"]{
+    padding: 0 !important;
+} */
+
+/* padding contianer */
+.block-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 2rem !important;
+    padding-bottom: 0rem !important;
+}
+
+
+/* lebar layar */
+.block-container {
+    max-width: 100% !important;
+}
+
+/* shadow kolom */
+div[data-testid="stColumn"]{
+border-radius: 16px;
+background: #ffffff;
+-webkit-box-shadow: 2px 2px 20px 0px rgba(0, 0, 0, 0.15);
+-moz-box-shadow: 2px 2px 20px 0px rgba(0, 0, 0, 0.15);
+box-shadow: 2px 2px 20px 0px rgba(0, 0, 0, 0.15);
+
+
+}
+
+/* height dari 2 kolom */
+/* div[data-testid="stHorizontalBlock"]{
+    height: 90vh !important;
+} */
+/* div[data-testid="stVerticalBlockBorderWrapper"]{
+    height: 90vh !important;
+} */
+
+.header-title{
+  padding: 8px 10px;
+  border: none; 
+  border-radius: 10px; 
+  display: inline-block;
+
+  background-color: #c7eb68;
+  
+  color: #000000;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  
+  /* Efek Bayangan (opsional, untuk sedikit kedalaman) */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  /* Transisi (opsional, untuk animasi halus saat hover) */
+  transition: background-color 0.2s ease;
+}
+
+.space{
+  border: none;
+  border-radius: 10px;
+  display: inline-block;
+
+  color: #000000;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 6px;
+  font-weight: 500;
+  text-align: center;
+
+}
+
+.status-box {
+  display: inline-block;
+  padding: 5px 5px; 
+  border-radius: 8px; 
+  background-color: #ff6363; 
+  color: #ffffff; 
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 600; 
+  box-shadow: 0 4px 10px rgba(255, 99, 99, 0.4); 
+}
+
+
