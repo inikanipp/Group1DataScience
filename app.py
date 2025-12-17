@@ -349,8 +349,13 @@ with col1:
                 ]])
 
                 hasil = model.predict(X_input)
-
-                st.success(f"Hasil Prediksi: {hasil[0]}")
+                if hasil[0] == 0 :
+                    result = "very short"
+                else :
+                    result = "short"
+                
+                
+                st.success(f"Hasil Prediksi: {result}")
                 st.caption(f"Usia: {usia_tahun:.2f} tahun")
 
             except Exception as e:
