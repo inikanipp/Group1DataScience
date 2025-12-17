@@ -1,7 +1,12 @@
 import streamlit as st
+from datetime import date
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import numpy as np
+from scipy.stats import boxcox
+import pickle
+import joblib
 
 st.title("SISTEM DETEKSI STUNTING ANAK")
 # st.write("Aplikasi Streamlit pertamaku 🚀")
@@ -297,29 +302,60 @@ with col2:
         
 # ========================= kolom 2 baris 1 =========================
 with col1:
+    model = joblib.load("model/model.pkl")
     tile = st.container(height=1000)
 
-    with tile :
+    with tile:
         st.markdown("""
             <div class="header-title">
-            Input Dataa
+            Input Data
             </div>
         """, unsafe_allow_html=True)
 
-        st.markdown("""
-            <div class="space">
-               
-            </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="space"></div>', unsafe_allow_html=True)
 
+        # ===== Lambda Box-Cox =====
+        LBirthWeight = -1.3288
+        LBirthHeight = 4.5616
+        LWeight = 1.0253
+        LHeight = 2.4460
+
+        # ===== Input =====
         tanggal = st.date_input("Tanggal Lahir")
-        BeratLahir = st.number_input("Berat Lahir (Kg)")
-        TinggiLahir = st.number_input("Tinggi Lahir (Kg)")
-        BeratSekarang = st.number_input("Berat Sekarang (Kg)")
-        TinggiSekarang = st.number_input("Tinggi Sekarang (Kg)")
+
+        BeratLahir = st.number_input("Berat Lahir (Kg)", min_value=0.01)
+        TinggiLahir = st.number_input("Tinggi Lahir (Cm)", min_value=0.01)
+        BeratSekarang = st.number_input("Berat Sekarang (Kg)", min_value=0.01)
+        TinggiSekarang = st.number_input("Tinggi Sekarang (Cm)", min_value=0.01)
 
         if st.button("Prediksi"):
-            st.write("Button diklik!")
+            try:
+                # ===== Hitung usia (tahun) =====
+                usia_tahun = (date.today() - tanggal).days / 365.25
+
+                # ===== Box-Cox =====
+                BeratLahir_bc = boxcox([BeratLahir], lmbda=LBirthWeight)[0]
+                TinggiLahir_bc = boxcox([TinggiLahir], lmbda=LBirthHeight)[0]
+                BeratSekarang_bc = boxcox([BeratSekarang], lmbda=LWeight)[0]
+                TinggiSekarang_bc = boxcox([TinggiSekarang], lmbda=LHeight)[0]
+
+                # ===== Gabung fitur (PERHATIKAN URUTAN!) =====
+                X_input = np.array([[
+                    usia_tahun,
+                    BeratLahir_bc,
+                    TinggiLahir_bc,
+                    BeratSekarang_bc,
+                    TinggiSekarang_bc
+                ]])
+
+                hasil = model.predict(X_input)
+
+                st.success(f"Hasil Prediksi: {hasil[0]}")
+                st.caption(f"Usia: {usia_tahun:.2f} tahun")
+
+            except Exception as e:
+                st.error(f"Terjadi kesalahan: {e}")
+
     
 
 
